@@ -18,21 +18,15 @@ namespace EndlessBoard_backend.classes
         public string PasswordHash { get; set; }
         public int AvatarId { get; set; }
 
-        public virtual ICollection<Comment_class> Comments { get; set; } // добавляем к пользователю коллекцию его комментариев, чтобы было как на Reddit
+        public ICollection<Comment> Comments { get; set; } // добавляем к пользователю коллекцию его комментариев, чтобы было как на Reddit
+
+        public ICollection<Post> Posts { get; set; }
+
 
 
     }
-
-
-
-  
-
-
-
-
-
-
-
-
-
 }
+
+
+
+

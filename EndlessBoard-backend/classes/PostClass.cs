@@ -14,15 +14,15 @@ namespace EndlessBoard_backend.classes
 
         [Required(ErrorMessage = "Autor_id обязательно для заполнения")]
 
-        [ForeignKey("AutorId")]
-        public int AutorId { get; set; }
 
-        public virtual User Autor { get; set; }
+        public int UserId { get; set; }
+
+        public User User { get; set; }
 
         [Required(ErrorMessage = "Date обязательно для заполнения")]
         public DateTime Date { get; set; }
 
-        public virtual ICollection<Comment_class> Comments { get; set; }
+        public ICollection<Comment> Comments { get; set; }
 
         //теперь Post_class содержит больше информации, такую как комментарии поста и ссылка на автора
 
