@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,6 +21,9 @@ namespace EndlessBoard_backend.classes
         [Required(ErrorMessage = "Post_id обязательно для заполнения")]
         public int PostId { get; set; }
         public Post Post { get; set; }
+
+        public int UserId { get; set; }
+        public User User { get; set; }
 
 
     }
