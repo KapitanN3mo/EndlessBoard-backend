@@ -12,8 +12,7 @@ namespace EndlessBoard_backend.classes
 
         [Required(ErrorMessage = "Text обязательно для заполнения")]
         public string Text { get; set; }
-        public int ReactionListId { get; set; }
-        public ReactionList ReactionList { get; set; }
 
+       
     }
 }

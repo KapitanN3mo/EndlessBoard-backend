@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic; // Добавляем using для List
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,7 +15,11 @@ namespace EndlessBoard_backend.classes
         public int UserId { get; set; }
         public User User { get; set; } // Навигационное свойство для пользователя
 
-        // Изменяем навигационное свойство на список реакций
-        public List<Reaction> Reactions { get; set; } = new List<Reaction>();
+        public int PostId { get; set; }
+        public Post Post { get; set; } // Навигационное свойство для поста
+
+        // Не изменяем навигационное свойство на список реакций
+        public int ReactionId { get; set; }
+        public Reaction Reaction { get; set; }
     }
 }
