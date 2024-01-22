@@ -18,14 +18,8 @@ namespace EndlessBoard_backend.classes
          public DateTime Date { get; set; }
 
         [Required(ErrorMessage = "Post_id обязательно для заполнения")]
-
-
         public int PostId { get; set; }
         public Post Post { get; set; }
-
-
-        public int UserId { get; set; }
-        public User User { get; set; }
 
 
     }

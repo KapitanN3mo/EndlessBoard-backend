@@ -13,12 +13,5 @@ namespace EndlessBoard_backend.classes
         [Required(ErrorMessage = "Text обязательно для заполнения")]
         public string Text { get; set; }
 
-        public int UserId { get; set; } // Внешний ключ для пользователя
-        public User User { get; set; } // Навигационное свойство для пользователя
-        //теперь мы будем хранить инфо о юзере в реакции чтобы реализовать Reaction_list и показывать статистику и информацию
-        
-        [ForeignKey("ReactionList")]
-        public int ReactionListId { get; set; }
-        public ReactionList ReactionList { get; set; }
     }
 }

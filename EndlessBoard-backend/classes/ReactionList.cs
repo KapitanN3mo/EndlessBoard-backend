@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
+using System.Collections.Generic; // Добавляем using для List
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,15 +11,11 @@ namespace EndlessBoard_backend.classes
         [Key]
         public int Id { get; set; }
 
-        [ForeignKey("Post")]
-        public int PostId { get; set; }
-        public Post Post { get; set; }
+        // Добавляем внешний ключ для пользователя
+        public int UserId { get; set; }
+        public User User { get; set; } // Навигационное свойство для пользователя
 
-       //public int ReactionId { get; set; }
-        public ICollection<Reaction> Reactions { get; set; } // Навигационное свойство для коллекции реакций
-
-        public ICollection<User> Users { get; set; } // Навигационное свойство для коллекции пользователей
-
-        //теперь Reaction_list полностью оправдывает своё название и хранит коллекцию реакций и пользователей которые взаимодействовали или просматривали
+        // Изменяем навигационное свойство на список реакций
+        public List<Reaction> Reactions { get; set; } = new List<Reaction>();
     }
 }
