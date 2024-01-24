@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-System.Collections.Generic
+using System.Collections.Generic;
 
 
 namespace EndlessBoard_backend.classes
@@ -13,13 +13,15 @@ namespace EndlessBoard_backend.classes
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Username обязательно для заполнения")]
+        [Required(ErrorMessage = "Username пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
         public string Username { get; set; }
-        [Required(ErrorMessage = "PasswordHash обязательно для заполнения")]
+        [Required(ErrorMessage = "PasswordHash пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
         public string PasswordHash { get; set; }
         public int? AvatarId { get; set; }
 
-        public List<Comment> Comments { get; set; } = new List<Comment>(); // добавляем к пользователю коллекцию его комментариев, чтобы было как на Reddit
+        public bool gender { get; set; } // male is "true"
+
+        public List<Comment> Comments { get; set; } = new List<Comment>(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ Reddit
 
         public List <Post> Posts { get; set; } = new List<Post>();
 
