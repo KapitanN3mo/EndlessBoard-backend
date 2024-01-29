@@ -9,19 +9,19 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace EndlessBoard_backend.classes
 {
-    public class UserAction
+    public class BaseAction
     {
         private readonly ApplicationContext _context;
 
-        public UserAction(ApplicationContext context)
+        public BaseAction(ApplicationContext context)
         {
             _context = context;
         }
 
-        public void AddComment(Comment comment, string IsUsername, string UserComm)
+        public bool AddComment(int userId, string UserComm)
         {
             // Получаем пользователя по его имени
-            User user = _context.Users.FirstOrDefault(u => u.Username == IsUsername);
+            User user = _context.Users.FirstOrDefault(u => u.Id == userId);
 
             if (user != null)
             {
@@ -35,29 +35,37 @@ namespace EndlessBoard_backend.classes
                 // Добавляем комментарий в базу данных
                 _context.Comments.Add(newComment);
                 _context.SaveChanges();
+                return true;
             }
+            else { return false; }
         }
 
         // ... (other methods)
 
-        public void AddPost(Post post, int userId, string Text, int? ImageId)
+        public bool AddPost(int userId, string Text, int? ImageId)
         {
             User user = _context.Users.FirstOrDefault(u => u.Id == userId);
 
-            Post newPost = new Post()
+            if (user != null)
             {
-                Text = Text,
-                ImageId = ImageId,
-                UserId = userId,
-                Date = DateTime.Now
 
-            };
-            _context.Posts.Add(newPost);
-            _context.SaveChanges();
+                Post newPost = new Post()
+                {
+                    Text = Text,
+                    ImageId = ImageId,
+                    UserId = userId,
+                    Date = DateTime.Now
 
+                };
+                _context.Posts.Add(newPost);
+                _context.SaveChanges();
+                return true;
+
+            }
+            else {return false; }
         }
 
-        public void DeletePost(int postId)
+        public bool DeletePost(int postId)
         {
             Post post = _context.Posts.FirstOrDefault(u => u.Id == postId);
 
@@ -65,16 +73,16 @@ namespace EndlessBoard_backend.classes
             {
                 _context.Posts.Remove(post);
                 _context.SaveChanges();
-                Console.WriteLine("db changes saved successfully");
+                return true;
             }
             else
             {
-                Console.WriteLine("comment not found");
+                return false;
             }
 
         }
 
-        public void DeleteComment(int commentId)
+        public bool DeleteComment(int commentId)
         {
 
             Comment comment = _context.Comments.FirstOrDefault(u => u.Id == commentId);
@@ -83,36 +91,47 @@ namespace EndlessBoard_backend.classes
             {
                 _context.Comments.Remove(comment);
                 _context.SaveChanges();
-                Console.WriteLine("db changes saved successfully");
+                return true;
             }
             else
             {
-                Console.WriteLine("comment not found");
+                return false;
             }
         }
 
-        public string AddUser(User user, string username, bool gender, int? avatarId, string password)
+        public User AddUser(string username, bool gender, int? avatarId, string password)
         {
             // Генерация соли
             string salt = BCrypt.Net.BCrypt.GenerateSalt();
 
-            // Хеширование пароля с использованием соли
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(password, salt);
-            User newUser = new User()
+            try
             {
-                Username = username,
-                gender = gender,
-                AvatarId = avatarId,
-                PasswordHash = passwordHash,
-            };
+                // Хеширование пароля с использованием соли
+                string passwordHash = BCrypt.Net.BCrypt.HashPassword(password, salt);
+                User newUser = new User()
+                {
+                    Username = username,
+                    gender = gender,
+                    AvatarId = avatarId,
+                    PasswordHash = passwordHash,
+                };
 
-            _context.Users.Add(newUser);
-            _context.SaveChanges();
-            return salt;
+                _context.Users.Add(newUser);
+                _context.SaveChanges();
+                return newUser;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
 
 
-         public void AddReactionList(int userId, int postId, int reactionId)
+            public bool AddReactionList(int userId, int postId, int reactionId)
+            {
+            try
             {
                 // Логика добавления новой записи в таблицу ReactionList
                 ReactionList newReactionList = new ReactionList
@@ -124,10 +143,18 @@ namespace EndlessBoard_backend.classes
 
                 _context.ReactionList.Add(newReactionList);
                 _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+
+            }
             }
 
 
-        public void RemoveReactionList(int listId)
+        public bool RemoveReactionList(int listId)
         {
             ReactionList removeInfo = _context.ReactionList.FirstOrDefault(x => x.Id == listId);
 
@@ -135,7 +162,9 @@ namespace EndlessBoard_backend.classes
             {
                 _context.ReactionList.Remove(removeInfo);
                 _context.SaveChanges();
+                return true;
             }
+            else { return false; }
 
 
 
@@ -143,14 +172,17 @@ namespace EndlessBoard_backend.classes
 
         }
 
-        public void removeUser(int userId)
+        public bool removeUser(int userId)
         {
             User user = _context.Users.FirstOrDefault(x => x.Id == userId);
             if (user != null)
             {
                 _context.Users.Remove(user);
                 _context.SaveChanges();
+                Console.WriteLine($"Remove User: {userId} by named: {user.Username}");
+                return true;
             }
+            else { return false; }
         }
 
 
