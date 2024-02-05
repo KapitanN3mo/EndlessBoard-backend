@@ -6,6 +6,13 @@ namespace EndlessBoard_backend.models
     {
         public DbSet<User> Users { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>(entuty =>
+            {
+                entuty.HasIndex(e => e.Username).IsUnique();
+            });
+        }
         public DbSet<ReactionList> ReactionList { get; set; }
 
         public DbSet<Reaction> Reactions { get; set; }

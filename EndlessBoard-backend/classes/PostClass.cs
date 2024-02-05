@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity;
+п»їusing Microsoft.AspNetCore.Identity;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,16 +13,16 @@ namespace EndlessBoard_backend.classes
 
         public string? Text { get; set; }
 
-        [Required(ErrorMessage = "UserId обязательно для заполнения")]
+        [Required(ErrorMessage = "UserId РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ")]
         public int UserId { get; set; }
         public User User { get; set; }
 
-        [Required(ErrorMessage = "Date обязательно для заполнения")]
+        [Required(ErrorMessage = "Date РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ")]
         public DateTime Date { get; set; }
 
         public List<Comment> Comments { get; set; } = new List<Comment>();
 
-        //теперь Post_class содержит больше информации, такую как комментарии поста и ссылка на автора
+        //С‚РµРїРµСЂСЊ Post_class СЃРѕРґРµСЂР¶РёС‚ Р±РѕР»СЊС€Рµ РёРЅС„РѕСЂРјР°С†РёРё, С‚Р°РєСѓСЋ РєР°Рє РєРѕРјРјРµРЅС‚Р°СЂРёРё РїРѕСЃС‚Р° Рё СЃСЃС‹Р»РєР° РЅР° Р°РІС‚РѕСЂР°
 
         public int? ImageId { get; set; }
         public bool IsEdit { get; set; } = false;

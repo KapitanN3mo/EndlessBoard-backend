@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Hosting;
 using BCrypt.Net;
 using System.Reflection.Metadata.Ecma335;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EndlessBoard_backend.classes
 {
@@ -18,7 +19,7 @@ namespace EndlessBoard_backend.classes
             _context = context;
         }
 
-        public bool AddComment(int userId, string UserComm)
+        public bool AddComment(Post post, int userId, string UserComm)
         {
             // Получаем пользователя по его имени
             User user = _context.Users.FirstOrDefault(u => u.Id == userId);
@@ -29,7 +30,9 @@ namespace EndlessBoard_backend.classes
                 Comment newComment = new Comment()
                 {
                     Text = UserComm,
-                    UserId = user.Id
+                    UserId = user.Id,
+                    PostId = post.Id,
+                    Date = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc)
                 };
 
                 // Добавляем комментарий в базу данных
@@ -42,7 +45,7 @@ namespace EndlessBoard_backend.classes
 
         // ... (other methods)
 
-        public bool AddPost(int userId, string Text, int? ImageId)
+        public Post? AddPost(int userId, string Text, int? ImageId)
         {
             User user = _context.Users.FirstOrDefault(u => u.Id == userId);
 
@@ -54,15 +57,15 @@ namespace EndlessBoard_backend.classes
                     Text = Text,
                     ImageId = ImageId,
                     UserId = userId,
-                    Date = DateTime.Now
+                    Date = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc)
 
-                };
+            };
                 _context.Posts.Add(newPost);
                 _context.SaveChanges();
-                return true;
+                return newPost;
 
             }
-            else {return false; }
+            else { return null; }
         }
 
         public bool DeletePost(int postId)
@@ -104,29 +107,23 @@ namespace EndlessBoard_backend.classes
             // Генерация соли
             string salt = BCrypt.Net.BCrypt.GenerateSalt();
 
-            try
+            // Хеширование пароля с использованием соли
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword(password, salt);
+            User newUser = new User()
             {
-                // Хеширование пароля с использованием соли
-                string passwordHash = BCrypt.Net.BCrypt.HashPassword(password, salt);
-                User newUser = new User()
-                {
-                    Username = username,
-                    gender = gender,
-                    AvatarId = avatarId,
-                    PasswordHash = passwordHash,
-                };
+                Username = username,
+                gender = gender,
+                AvatarId = avatarId,
+                PasswordHash = passwordHash,
+            };
 
-                _context.Users.Add(newUser);
-                _context.SaveChanges();
-                return newUser;
+            _context.Users.Add(newUser);
+            _context.SaveChanges();
+            return newUser;
 
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return null;
-            }
         }
+
+
 
 
             public bool AddReactionList(int userId, int postId, int reactionId)
@@ -165,14 +162,33 @@ namespace EndlessBoard_backend.classes
                 return true;
             }
             else { return false; }
+        }
 
-
-
-
+        public bool AddReaction (string reaction)
+        {
+            try
+            {
+                var Newreaction = new Reaction { Text = reaction };
+                _context.Reactions.Add(Newreaction);
+                _context.SaveChanges();
+                return true;
+            } catch (Exception ex) { Console.WriteLine($"{ex} - can not to create Reaction, try to fix it"); return false; }
 
         }
 
-        public bool removeUser(int userId)
+        public bool DeleteReaction (int reactID)
+        {
+            Reaction thisReact = _context.Reactions.FirstOrDefault(e => e.Id == reactID);
+            if (thisReact != null)
+            {
+                _context.Reactions.Remove(thisReact);
+                _context.SaveChanges();
+                return true;
+            }
+            else { return false; };
+        }
+
+        public bool RemoveUser(int userId)
         {
             User user = _context.Users.FirstOrDefault(x => x.Id == userId);
             if (user != null)
