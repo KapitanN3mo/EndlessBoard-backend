@@ -18,45 +18,6 @@ builder.Services.AddScoped<BaseAction>();
 
 var app = builder.Build();
 
-//app.Run(async context =>
-//{
-//    var baseService = context.RequestServices.GetService<BaseAction>();
-//    var result = baseService.AddUser("bafvfgfix", true, null, "bagfvfvffix");
-//    if (result != null)
-//    {
-//        Console.WriteLine("пользователь успешно создан! ID is " + result.Id);
-//    }
-//    else { Console.WriteLine("ERROR!!!!"); }
-//});
-
-//app.Run(async context =>
-//{
-//    var baseService = context.RequestServices.GetService<BaseAction>();
-//    var result = baseService.RemoveUser(1);
-//    if (result != null)
-//    {
-//        Console.WriteLine("Sucsess!");
-
-//    }
-//    else { Console.WriteLine("ERROR!!!!"); }
-//});
-
-//app.Run(async context =>
-//{
-//    var baseService = context.RequestServices.GetService<BaseAction>();
-//    Post resultPost = baseService.AddPost(15, "test1", null);
-//    bool resultCom = baseService.AddComment(resultPost, 2, "test1");
-
-//    if (resultCom == true)
-//    {
-//        Console.WriteLine("Скрипт выполнен успешно");
-//        return;
-//    }
-//    else { Console.WriteLine("на этапе создания поста или комментария что-то пошло не так"); }
-//    return;
-//});
-
-
 
 
 app.MapGet("/", (HttpContext context) =>
@@ -65,7 +26,7 @@ app.MapGet("/", (HttpContext context) =>
     //var result = baseService.AddUser("bomber", true, null, "sqwad123");
     //if (result != null)
     //{
-    //    Console.WriteLine("пользователь успешно создан! ID is " + result.Id);
+    //    Console.WriteLine("РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ СѓСЃРїРµС€РЅРѕ СЃРѕР·РґР°РЅ! ID is" + result.Id);
     //}
     //else { Console.WriteLine("ERROR!!!!"); }
 
@@ -84,10 +45,10 @@ app.MapGet("/", (HttpContext context) =>
 
     //if (resultCom == true)
     //{
-    //    Console.WriteLine("Скрипт выполнен успешно");
+    //    Console.WriteLine("РЎРєСЂРёРїС‚ СѓСЃРїРµС€РЅРѕ РІС‹РїРѕР»РЅРµРЅ!");
     //    return;
     //}
-    //else { Console.WriteLine("на этапе создания поста или комментария что-то пошло не так"); }
+    //else { Console.WriteLine("РЅР° СЌС‚Р°РїРµ СЃРѕР·РґР°РЅРёСЏ РїРѕСЃС‚Р° РёР»Рё РєРѕРјРјРµРЅС‚Р°СЂРёСЏ РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°"); }
     //return;
 
 
@@ -95,30 +56,30 @@ app.MapGet("/", (HttpContext context) =>
     //bool resultCom = baseService.DeleteComment(1);
     //if (resultCom == true)
     //{
-    //    Console.WriteLine("комментарий успешно удален");
+    //    Console.WriteLine("РєРѕРјРјРµРЅС‚Р°СЂРёР№ СѓСЃРїРµС€РЅРѕ СѓРґР°Р»С‘РЅ");
     //}
     //bool resultPost = baseService.DeletePost(1);
     //if (resultPost == true)
     //{
-    //    Console.WriteLine("пост успешно удален");
+    //    Console.WriteLine("РїРѕСЃС‚ СѓСЃРїРµС€РЅРѕ СѓРґР°Р»С‘РЅ");
     //}
 
     //var baseService = context.RequestServices.GetService<BaseAction>();
     //bool reactResult = baseService.AddReaction(":)");
     //if (reactResult)
     //{
-    //    Console.WriteLine("реакция успешно добавлена!");
+    //    Console.WriteLine("СЂРµР°С†РєРёСЏ СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅР°!");
     //}
 
     //bool reactDel = baseService.DeleteReaction(1);
     //if (reactDel)
     //{
-    //    Console.WriteLine("реакция успешно удалена!");
+    //    Console.WriteLine("СЂРµР°РєС†РёСЏ СѓСЃРїРµС€РЅРѕ СѓРґР°Р»РµРЅР°!");
     //}
 
 
 
- 
+
 });
 
 app.Run();

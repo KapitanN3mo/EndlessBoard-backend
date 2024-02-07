@@ -13,16 +13,14 @@ namespace EndlessBoard_backend.classes
 
         public string? Text { get; set; }
 
-        [Required(ErrorMessage = "UserId обязательно для заполнения")]
+        [Required(ErrorMessage = "UserId не может быть пустым")]
         public int UserId { get; set; }
         public User User { get; set; }
 
-        [Required(ErrorMessage = "Date обязательно для заполнения")]
+        [Required(ErrorMessage = "Date не может быть пустым")]
         public DateTime Date { get; set; }
 
         public List<Comment> Comments { get; set; } = new List<Comment>();
-
-        //теперь Post_class содержит больше информации, такую как комментарии поста и ссылка на автора
 
         public int? ImageId { get; set; }
         public bool IsEdit { get; set; } = false;

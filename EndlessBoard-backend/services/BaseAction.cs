@@ -21,12 +21,12 @@ namespace EndlessBoard_backend.classes
 
         public bool AddComment(Post post, int userId, string UserComm)
         {
-            // Получаем пользователя по его имени
+
             User user = _context.Users.FirstOrDefault(u => u.Id == userId);
 
             if (user != null)
             {
-                // Создаем новый комментарий
+            
                 Comment newComment = new Comment()
                 {
                     Text = UserComm,
@@ -35,7 +35,7 @@ namespace EndlessBoard_backend.classes
                     Date = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc)
                 };
 
-                // Добавляем комментарий в базу данных
+
                 _context.Comments.Add(newComment);
                 _context.SaveChanges();
                 return true;
@@ -43,7 +43,6 @@ namespace EndlessBoard_backend.classes
             else { return false; }
         }
 
-        // ... (other methods)
 
         public Post? AddPost(int userId, string Text, int? ImageId)
         {
@@ -104,10 +103,8 @@ namespace EndlessBoard_backend.classes
 
         public User AddUser(string username, bool gender, int? avatarId, string password)
         {
-            // Генерация соли
             string salt = BCrypt.Net.BCrypt.GenerateSalt();
 
-            // Хеширование пароля с использованием соли
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(password, salt);
             User newUser = new User()
             {
@@ -130,7 +127,6 @@ namespace EndlessBoard_backend.classes
             {
             try
             {
-                // Логика добавления новой записи в таблицу ReactionList
                 ReactionList newReactionList = new ReactionList
                 {
                     UserId = userId,

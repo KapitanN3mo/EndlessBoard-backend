@@ -11,14 +11,13 @@ namespace EndlessBoard_backend.classes
         [Key]
         public int Id { get; set; }
 
-        // Добавляем внешний ключ для пользователя
+        // добавляем внешний ключ пользователя
         public int UserId { get; set; }
-        public User User { get; set; } // Навигационное свойство для пользователя
+        public User User { get; set; } // навигационное свойство пользователя
 
         public int PostId { get; set; }
-        public Post Post { get; set; } // Навигационное свойство для поста
+        public Post Post { get; set; } // навигационное свойство поста
 
-        // Не изменяем навигационное свойство на список реакций
         public int ReactionId { get; set; }
         public Reaction Reaction { get; set; }
     }

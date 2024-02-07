@@ -10,15 +10,15 @@ namespace EndlessBoard_backend.classes
     {
         [Key] public int Id { get; set; }
 
-        [Required(ErrorMessage = "Текст обязательно для заполнения")]
+        [Required(ErrorMessage = "Текст не может быть пустым")]
         public string Text { get; set; }
 
 
 
-        [Required(ErrorMessage = "Date обязательно для заполнения")]
+        [Required(ErrorMessage = "Date не может быть пустым")]
          public DateTime Date { get; set; }
 
-        [Required(ErrorMessage = "Post_id обязательно для заполнения")]
+        [Required(ErrorMessage = "Post_id не может быть пустым")]
         public int PostId { get; set; }
         public Post Post { get; set; }
 
