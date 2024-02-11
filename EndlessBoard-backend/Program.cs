@@ -6,6 +6,8 @@ using EndlessBoard_backend.classes;
 using Microsoft.Extensions.DependencyInjection;
 using EndlessBoard_backend;
 using Microsoft.AspNetCore.Http;
+using EndlessBoard_backend.models;
+using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -133,6 +135,134 @@ app.MapGet("/api/reactionsList{post_id}", async (ApplicationContext context, int
         return Results.Json(target);
     }
     else { return Results.Json(null); }
+});
+
+app.MapPost("/api/posts/", async(HttpContext context, string text, int user_id, int? image_id) => 
+{
+    var baseService = context.RequestServices.GetService<BaseAction>();
+    var result = baseService.AddPost(user_id, text, image_id);
+    if (result != null)
+    {
+        return Results.Json(result);
+    }
+    else
+    {
+        return Results.Json(null);
+    }
+});
+
+app.MapPost("/api/comments", (HttpContext context, Post post, int user_id, string UserComm) =>
+{
+    var baseService = context.RequestServices.GetService<BaseAction>();
+    var result = baseService.AddComment(post, user_id, UserComm);
+    if (result != false)
+    {
+        return Results.Json(result);
+    }
+    else
+    {
+        return Results.Json(null);
+    }
+});
+
+
+app.MapPost("/api/reactions", (HttpContext context,string reaction) =>
+{
+    var baseService = context.RequestServices.GetService<BaseAction>();
+    var result = baseService.AddReaction(reaction);
+    if (result != false)
+    {
+        return Results.Json(result);
+    }
+    else
+    {
+        return Results.Json(null);
+    }
+});
+
+app.MapPost("/api/reactionsList", (HttpContext context, int userId, int postId, int reactionId)=>
+{
+    var baseService = context.RequestServices.GetService<BaseAction>();
+    var result = baseService.AddReactionList(userId, postId, reactionId);
+    if (result != false)
+    {
+        return Results.Json(result);
+    }
+    else
+    {
+        return Results.Json(null);
+    }
+});
+
+app.MapDelete("/api/users/{id}", async (HttpContext context, int id) =>
+{
+    var baseService = context.RequestServices.GetService<BaseAction>();
+    var result = baseService.RemoveUser(id);
+    if (result)
+    {
+        return Results.Ok();
+    }
+    else
+    {
+        return Results.NotFound();
+    }
+});
+
+app.MapDelete("/api/posts/{id}", async (HttpContext context, int id) =>
+{
+    var baseService = context.RequestServices.GetService<BaseAction>();
+    var result = baseService.DeletePost(id);
+    if (result)
+    {
+        return Results.Ok();
+    }
+    else
+    {
+        return Results.NotFound();
+    }
+});
+
+app.MapDelete("/api/reactions/{id}", async (HttpContext context, int id) =>
+{
+    var baseService = context.RequestServices.GetService<BaseAction>();
+    var result = baseService.DeleteReaction(id);
+    if (result)
+    {
+        return Results.Ok();
+    }
+    else
+    {
+        return Results.NotFound();
+    }
+});
+
+app.MapDelete("/api/reactionsList/{id}", async (HttpContext context, int id) =>
+{
+    var baseService = context.RequestServices.GetService<BaseAction>();
+    var result = baseService.RemoveReactionList(id);
+    if (result)
+    {
+        return Results.Ok();
+    }
+    else
+    {
+        return Results.NotFound();
+    }
+});
+
+
+app.MapDelete("/api/comments/{id}", async (HttpContext context, int id) =>
+{
+    var baseService = context.RequestServices.GetService<BaseAction>();
+    var result = baseService.DeleteComment(id);
+    if (result)
+    {
+        return Results.Ok();
+    }
+    else
+    {
+        return Results.NotFound();
+    }
 });
 
 

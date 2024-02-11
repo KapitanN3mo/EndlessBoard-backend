@@ -109,7 +109,7 @@ namespace EndlessBoard_backend.classes
             User newUser = new User()
             {
                 Username = username,
-                gender = gender,
+                //gender = gender,
                 AvatarId = avatarId,
                 PasswordHash = passwordHash,
             };
