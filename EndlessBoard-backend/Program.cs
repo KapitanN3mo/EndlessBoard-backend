@@ -18,6 +18,122 @@ builder.Services.AddScoped<BaseAction>();
 
 var app = builder.Build();
 
+app.MapGet("/api/users", async (ApplicationContext context) =>
+{
+    var users = await context.Users.ToListAsync();
+    return Results.Json(users);
+});
+
+app.MapGet("/api/users/{id}", async (ApplicationContext context, int id) =>
+{
+    var target = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
+    if (target != null)
+    {
+        return Results.Json(target);
+    }
+    else
+    {
+        return Results.Json(null);
+    }
+});
+
+app.MapGet("/api/posts", async (ApplicationContext context, int offset = 0) =>
+{
+    var posts = await context.Posts
+        .Skip(offset)
+        .Take(25)
+        .ToListAsync();
+
+    return Results.Json(posts);
+});
+
+app.MapGet("/api/posts/{id}", async (ApplicationContext context, int id) =>
+{
+    var target = await context.Posts.FirstOrDefaultAsync(u => u.Id == id);
+    if (target != null)
+    {
+        return Results.Json(target);
+    }
+    else
+    {
+        return Results.Json(null);
+    }
+});
+
+app.MapGet("/api/comments/{user_id}", async (ApplicationContext context, int user_id) =>
+{
+    var target = await context.Comments
+    .Where(c => c.UserId == user_id).ToListAsync();
+
+    if( target != null)
+    {
+        return Results.Json(target);
+    }
+    else
+    {
+        return Results.Json(null);
+    }
+});
+
+app.MapGet("/api/comments/{post_id}", async (ApplicationContext context, int post_id) => 
+{
+    var target = await context.Comments
+    .Where(c => c.PostId == post_id).ToListAsync();
+    if( target != null)
+    {
+        return Results.Json(target);
+    }
+    else { return Results.Json(null); }
+});
+
+app.MapGet("/api/reactions/", async (ApplicationContext context) =>
+{
+    var target = await context.Reactions.ToListAsync();
+    if(target != null)
+    {
+        return Results.Json(target);
+    }
+    else
+    {
+        return Results.Json(null);
+    }
+});
+
+app.MapGet("/api/reactions/{react_id}", async (ApplicationContext context,int react_id) =>
+{
+    var target = await context.Reactions.FirstOrDefaultAsync(n =>n.Id == react_id);
+    if (target != null)
+    {
+        return Results.Json(target);
+    }
+    else
+    {
+        return Results.Json(null);
+    }
+});
+
+app.MapGet("/api/reactionsList{list_id}", async (ApplicationContext context, int list_id) => 
+{
+    var target = await context.ReactionList.FirstOrDefaultAsync(n =>n.Id == list_id);
+    if (target != null)
+    {
+        return Results.Json(target);
+    }
+    else 
+    {
+        return Results.Json(null);
+    }
+});
+
+app.MapGet("/api/reactionsList{post_id}", async (ApplicationContext context, int post_id) => 
+{
+    var target = await context.ReactionList.FirstOrDefaultAsync(n => n.PostId == post_id);
+    if (target != null)
+    {
+        return Results.Json(target);
+    }
+    else { return Results.Json(null); }
+});
 
 
 app.MapGet("/", (HttpContext context) =>
