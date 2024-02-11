@@ -10,7 +10,8 @@ namespace EndlessBoard_backend.classes
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Text не может быть пустым")]
+
+        [Required(ErrorMessage = "Text обязательно для заполнения")]
         public string Text { get; set; }
 
        

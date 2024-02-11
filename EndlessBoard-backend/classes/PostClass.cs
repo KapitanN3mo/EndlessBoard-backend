@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,11 +13,13 @@ namespace EndlessBoard_backend.classes
 
         public string? Text { get; set; }
 
-        [Required(ErrorMessage = "UserId не может быть пустым")]
-        public int UserId { get; set; }
-        public User User { get; set; }
 
-        [Required(ErrorMessage = "Date не может быть пустым")]
+        [Required()]
+        public int UserId { get; set; }
+      
+        public User User { get; set; }
+      
+        [Required()]
         public DateTime Date { get; set; }
 
         public List<Comment> Comments { get; set; } = new List<Comment>();
